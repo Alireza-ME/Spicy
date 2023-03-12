@@ -1,0 +1,6 @@
+SPICY.IMPORT{cv2 as cv}
+
+#SPICY.CODE_START
+img = cv.imread(SPICY_ARG)
+print(img)
+SPICY.CODE_END
