@@ -12,16 +12,19 @@ use spicy\extensions\Transpiler;
 class Spicy
 {
 
-    //arguments var
+    //method name
     private string $method;
 
-    //python version var
+    //method arguments
     private array $args;
 
+    //methods object
     private object $Methods;
 
+    //run ext object
     private object $Execute;
 
+    //convert codes from spicy to py
     private object $Transpiler;
 
     public function __construct()
@@ -41,15 +44,20 @@ class Spicy
         if (Methods::cv_method_exists(strtolower($method_name))) {
             $this->method = strtolower($method_name);
             $this->args = $args;
-            return $this->run();
-        }  else {
+            return $this->Transpiler->convert_method($this->method, $this->args);
+        } else {
             throw new Exception('method not found');
         }
     }
 
-    private function run()
+    public function run(array $proc = [])
     {
-        $code = $this->Transpiler->convert_method($this->method, $this->args);
+        $code = null;
+        if ($proc == []) {
+            $code .= $this->Transpiler->convert_method($this->method, $this->args);
+        } else {
+            foreach ($proc as $prc) $code .= $prc;
+        }
         $handler = new HandlerManage();
         $handler->add_to_handler($code);
         $result = $this->Execute->execute_file();
