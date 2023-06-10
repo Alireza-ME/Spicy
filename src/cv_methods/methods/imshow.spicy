@@ -1,0 +1,5 @@
+#SPICY.CODE_START
+cv.imshow(SPICY_ARG,img)
+cv.waitKey(0)
+cv.destroyAllWindows()
+SPICY.CODE_END
